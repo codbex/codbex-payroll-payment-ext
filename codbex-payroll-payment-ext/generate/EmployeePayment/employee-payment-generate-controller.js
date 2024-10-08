@@ -6,6 +6,18 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
 
 
+    const payrollEntryUrl = `/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePayment.ts/payrollData/${params.id}`;
+    $http.get(payrollEntryUrl)
+        .then(function (response) {
+            $scope.PayrollData = response.data;
+        });
+
+    $scope.paySalary = function () {
+
+    };
+
+
+
 
     $scope.closeDialog = function () {
         $scope.showDialog = false;
