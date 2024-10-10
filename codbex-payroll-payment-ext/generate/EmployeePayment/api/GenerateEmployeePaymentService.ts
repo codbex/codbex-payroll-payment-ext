@@ -15,7 +15,7 @@ class GenerateEmployeePaymentService {
         this.employeeDao = new EmployeeDao();
     }
 
-    @Get("/:payrollData/:payrollId")
+    @Get("/payrollData/:payrollId")
     public payrollData(_: any, ctx: any) {
         const payrollId = ctx.pathParameters.payrollId;
 
@@ -26,11 +26,12 @@ class GenerateEmployeePaymentService {
             "Employee": payrollEntry.Employee,
             "NetSalary": payrollEntry.NetSalary,
             "Taxes": payrollEntry.Taxes,
-            "PayrollStatus": payrollEntry.PayrollStatus
+            "PayrollStatus": payrollEntry.PayrollStatus,
+            "StartDate": payrollEntry.StartDate
         };
     }
 
-    @Get("/:employeeData/:employeeId")
+    @Get("/employeeData/:employeeId")
     public employeeData(_: any, ctx: any) {
         const employeeId = ctx.pathParameters.employeeId;
 

@@ -7,10 +7,11 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
     const employeeUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/employeeData/";
     const payrollEntryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/" + params.id;
+
     $http.get(payrollEntryUrl)
         .then(function (response) {
+
             $scope.PayrollData = response.data;
-            $scope.Employee = response.data.Employee;
 
             if (response.data.PayrollStatus == 1) {
                 $scope.Paid = true;
@@ -18,18 +19,20 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
                 $scope.Paid = false;
             }
 
-            return $http.get(employeeUrl + $scope.Employee);
+            const date = new Date(response.data.StartDate);
+
+            $scope.MonthName = date.toLocaleString('default', { month: 'long' });
+            $scope.Year = date.getFullYear();
+
+            return $http.get(employeeUrl + response.data.Employee);
         })
         .then(function (response) {
-            console.log(response.data);
+            $scope.EmployeeName = response.data.Name;
         });
 
     $scope.paySalary = function () {
 
     };
-
-
-
 
     $scope.closeDialog = function () {
         $scope.showDialog = false;
@@ -38,3 +41,4 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
     document.getElementById("dialog").style.display = "block";
 }]);
+
