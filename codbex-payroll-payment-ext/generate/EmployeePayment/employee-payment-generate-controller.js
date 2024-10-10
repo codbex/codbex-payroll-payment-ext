@@ -22,7 +22,6 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
         })
         .then(function (response) {
             console.log(response.data);
-            return $http.get(employeeUrl + $scope.Employee);
         });
 
     $scope.paySalary = function () {
