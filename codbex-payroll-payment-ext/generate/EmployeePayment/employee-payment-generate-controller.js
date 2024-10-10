@@ -5,18 +5,24 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     $scope.showDialog = true;
 
 
-
-    const payrollEntryUrl = `/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/${params.id}`;
+    const employeeUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/employeeData/";
+    const payrollEntryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/" + params.id;
     $http.get(payrollEntryUrl)
         .then(function (response) {
+            $scope.PayrollData = response.data;
+            $scope.Employee = response.data.Employee;
 
             if (response.data.PayrollStatus == 1) {
-                $scope.paid = true;
+                $scope.Paid = true;
             } else {
-                $scope.paid = false;
-                $scope.payrollData = response.data;
+                $scope.Paid = false;
             }
 
+            return $http.get(employeeUrl + $scope.Employee);
+        })
+        .then(function (response) {
+            console.log(response.data);
+            return $http.get(employeeUrl + $scope.Employee);
         });
 
     $scope.paySalary = function () {
