@@ -23,8 +23,11 @@
                 <div class="title">Pay salary</div>
                 <div class="line"></div>
 
-                <div class="main-text">
-                    <p>You will pay 1200BGN to John Smith for October 2024</p>
+                <div class="main-text" ng-if="paid">
+                    <p>You have already paid {{}}'s salary for {{}} {{}}</p>
+                </div>
+                <div class="main-text" ng-if="!paid">
+                    <p>You will pay {{}} to {{}} for {{}} {{}}</p>
                 </div>
 
                 <div class="dialog-buttons">

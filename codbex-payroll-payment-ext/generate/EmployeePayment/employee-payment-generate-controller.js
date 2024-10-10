@@ -6,10 +6,17 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
 
 
-    const payrollEntryUrl = `/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePayment.ts/payrollData/${params.id}`;
+    const payrollEntryUrl = `/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/${params.id}`;
     $http.get(payrollEntryUrl)
         .then(function (response) {
-            $scope.PayrollData = response.data;
+
+            if (response.data.PayrollStatus == 1) {
+                $scope.paid = true;
+            } else {
+                $scope.paid = false;
+                $scope.payrollData = response.data;
+            }
+
         });
 
     $scope.paySalary = function () {
