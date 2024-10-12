@@ -8,6 +8,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     const employeeUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/employeeData/";
     const payrollEntryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/" + params.id;
     const salaryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/salaryData/";
+    const employeePaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/api/EmployeePayment/EmployeePaymentService.ts/";
 
     $http.get(payrollEntryUrl)
         .then(function (response) {
@@ -36,9 +37,6 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             $scope.SalaryData = response.data;
         });
 
-
-
-
     $scope.paySalary = function () {
 
         const employeePayment = {
@@ -51,7 +49,14 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             "Reason": $scope.PayrollData.Title
         }
 
-        console.log(employeePayment);
+        $http.post(employeePaymentUrl, employeePayment)
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error("Error creating Employee payment:", error);
+            });
+        ;
 
     };
 
