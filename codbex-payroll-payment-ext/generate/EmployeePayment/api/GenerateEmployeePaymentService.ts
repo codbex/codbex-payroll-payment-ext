@@ -2,6 +2,7 @@ import { Controller, Get } from "sdk/http";
 
 import { PayrollEntryRepository as PayrollEntryDao } from "../../../../codbex-payrolls/gen/codbex-payrolls/dao/Payrolls/PayrollEntryRepository";
 import { EmployeeRepository as EmployeeDao } from "../../../../codbex-employees/gen/codbex-employees/dao/Employees/EmployeeRepository";
+import { SalaryRepository as SalaryDao } from "../../../../codbex-salaries/gen/codbex-salaries/dao/Salaries/SalaryRepository";
 
 
 @Controller
@@ -9,10 +10,12 @@ class GenerateEmployeePaymentService {
 
     private readonly payrollEntryDao;
     private readonly employeeDao;
+    private readonly salaryDao;
 
     constructor() {
         this.payrollEntryDao = new PayrollEntryDao();
         this.employeeDao = new EmployeeDao();
+        this.salaryDao = new SalaryDao();
     }
 
     @Get("/payrollData/:payrollId")
@@ -23,6 +26,7 @@ class GenerateEmployeePaymentService {
 
         return {
             "Id": payrollEntry.Id,
+            "Title": payrollEntry.Title,
             "Employee": payrollEntry.Employee,
             "NetSalary": payrollEntry.NetSalary,
             "Taxes": payrollEntry.Taxes,
@@ -39,6 +43,18 @@ class GenerateEmployeePaymentService {
 
         return {
             "Name": employeeEntry.Name
+        };
+    }
+
+    @Get("/salaryData/:salaryId")
+    public salaryData(_: any, ctx: any) {
+        const salaryId = ctx.pathParameters.salaryId;
+
+        const salaryEntry = this.salaryDao.findById(salaryId);
+
+        return {
+            "IBAN": salaryEntry.IBAN,
+            "Currency": salaryEntry.Currency
         };
     }
 

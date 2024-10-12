@@ -7,6 +7,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
     const employeeUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/employeeData/";
     const payrollEntryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/" + params.id;
+    const salaryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/salaryData/";
 
     $http.get(payrollEntryUrl)
         .then(function (response) {
@@ -28,9 +29,29 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
         })
         .then(function (response) {
             $scope.EmployeeName = response.data.Name;
+
+            return $http.get(salaryUrl + $scope.PayrollData.Employee);
+        })
+        .then(function (response) {
+            $scope.SalaryData = response.data;
         });
 
+
+
+
     $scope.paySalary = function () {
+
+        const employeePayment = {
+            "Date": new Date().toLocaleDateString('en-CA'),
+            "Valor": new Date().toLocaleDateString('en-CA'),
+            "CounterpartyIBAN": $scope.SalaryData.IBAN,
+            "CounterpartyName": $scope.EmployeeName,
+            "Amount": $scope.PayrollData.NetSalary,
+            "Currency": $scope.SalaryData.Currency,
+            "Reason": $scope.PayrollData.Title
+        }
+
+        console.log(employeePayment);
 
     };
 
