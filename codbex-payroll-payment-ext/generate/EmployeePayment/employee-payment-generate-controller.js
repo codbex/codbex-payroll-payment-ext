@@ -9,6 +9,8 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
     const payrollEntryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/payrollData/" + params.id;
     const salaryUrl = "/services/ts/codbex-payroll-payment-ext/generate/EmployeePayment/api/GenerateEmployeePaymentService.ts/salaryData/";
     const employeePaymentUrl = "/services/ts/codbex-payments/gen/codbex-payments/api/EmployeePayment/EmployeePaymentService.ts/";
+    const payrollUpdateUrl = "/services/ts/codbex-payrolls/gen/codbex-payrolls/api/Payrolls/PayrollEntryService.ts/";
+
 
     $http.get(payrollEntryUrl)
         .then(function (response) {
@@ -51,10 +53,22 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
         $http.post(employeePaymentUrl, employeePayment)
             .then(function (response) {
-                console.log(response.data);
+
+                $scope.PayrollData.PayDate = new Date().getTime();
+                $scope.PayrollData.PayrollStatus = 1;
+
+                $http.put(payrollUpdateUrl + $scope.PayrollData.Id, $scope.PayrollData)
+                    .then(function (response) {
+                        console.log(response.data);
+                        $scope.closeDialog();
+                    })
+                    .catch(function (error) {
+                        console.error("Error updating Payroll entry", error);
+                    });;
+
             })
             .catch(function (error) {
-                console.error("Error creating Employee payment:", error);
+                console.error("Error creating Employee payment", error);
             });
         ;
 

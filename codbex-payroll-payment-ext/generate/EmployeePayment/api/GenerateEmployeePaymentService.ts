@@ -26,12 +26,14 @@ class GenerateEmployeePaymentService {
 
         return {
             "Id": payrollEntry.Id,
-            "Title": payrollEntry.Title,
             "Employee": payrollEntry.Employee,
+            "Title": payrollEntry.Title,
             "NetSalary": payrollEntry.NetSalary,
             "Taxes": payrollEntry.Taxes,
             "PayrollStatus": payrollEntry.PayrollStatus,
-            "StartDate": payrollEntry.StartDate
+            "StartDate": payrollEntry.StartDate,
+            "EndDate": payrollEntry.EndDate,
+            "PayDate": payrollEntry.PayDate
         };
     }
 
