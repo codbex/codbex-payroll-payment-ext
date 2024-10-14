@@ -31,7 +31,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             return $http.get(employeeUrl + response.data.Employee);
         })
         .then(function (response) {
-            $scope.EmployeeName = response.data.Name;
+            $scope.Employee = response.data;
 
             return $http.get(salaryUrl + $scope.PayrollData.Employee);
         })
@@ -44,8 +44,8 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
         const employeePayment = {
             "Date": new Date().toLocaleDateString('en-CA'),
             "Valor": new Date().toLocaleDateString('en-CA'),
-            "CounterpartyIBAN": $scope.SalaryData.IBAN,
-            "CounterpartyName": $scope.EmployeeName,
+            "CounterpartyIBAN": $scope.Employee.IBAN,
+            "CounterpartyName": $scope.Employee.Name,
             "Amount": $scope.PayrollData.NetSalary,
             "Currency": $scope.SalaryData.Currency,
             "Reason": $scope.PayrollData.Title

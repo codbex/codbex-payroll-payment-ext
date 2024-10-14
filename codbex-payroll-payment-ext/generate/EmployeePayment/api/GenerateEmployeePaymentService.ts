@@ -44,7 +44,8 @@ class GenerateEmployeePaymentService {
         const employeeEntry = this.employeeDao.findById(employeeId);
 
         return {
-            "Name": employeeEntry.Name
+            "Name": employeeEntry.Name,
+            "IBAN": employeeEntry.IBAN
         };
     }
 
