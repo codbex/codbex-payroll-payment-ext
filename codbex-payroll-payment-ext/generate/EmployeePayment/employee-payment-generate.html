@@ -24,10 +24,13 @@
                 <div class="line"></div>
 
                 <div class="main-text" ng-if="Paid">
-                    <p>You have already paid {{EmployeeName}}'s salary for {{MonthName}} {{Year}}</p>
+                    <p>You have already paid {{Employee.Name}}'s salary for {{MonthName}} {{Year}}</p>
                 </div>
                 <div class="main-text" ng-if="!Paid">
-                    <p>You will pay {{PayrollData.NetSalary}} to {{EmployeeName}} for {{MonthName}} {{Year}}</p>
+                    <p>You will pay <b>{{SalaryData.Net}} {{SalaryData.CurrencyCode}}</b> and <b>{{SalaryData.Taxes}}
+                            {{SalaryData.CurrencyCode}}</b> as taxes to {{Employee.Name}} for
+                        {{MonthName}} {{Year}}
+                    </p>
                 </div>
 
                 <div class="dialog-buttons" ng-if="!Paid">

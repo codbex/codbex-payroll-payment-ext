@@ -17,7 +17,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
             $scope.PayrollData = response.data;
 
-            if (response.data.PayrollStatus == 1) {
+            if (response.data.Status == 1) {
                 $scope.Paid = true;
             } else {
                 $scope.Paid = false;
@@ -36,6 +36,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             return $http.get(salaryUrl + $scope.PayrollData.Employee);
         })
         .then(function (response) {
+            console.log(response.data);
             $scope.SalaryData = response.data;
         });
 
@@ -46,7 +47,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             "Valor": new Date().toLocaleDateString('en-CA'),
             "CounterpartyIBAN": $scope.Employee.IBAN,
             "CounterpartyName": $scope.Employee.Name,
-            "Amount": $scope.PayrollData.NetSalary,
+            "Amount": $scope.SalaryData.Net,
             "Currency": $scope.SalaryData.Currency,
             "Reason": $scope.PayrollData.Title
         }
