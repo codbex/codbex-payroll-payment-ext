@@ -1,5 +1,6 @@
 {
     "name": "codbex/codbex-payroll-payment-ext",
+    "version": "0.1.0",
     "repository": {
         "url": "https://github.com/codbex/codbex-payroll-payment-ext.git",
         "type": "git"
